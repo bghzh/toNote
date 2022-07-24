@@ -1,0 +1,67 @@
+glib编译
+git clone https://github.com/GNOME/glib.git
+
+CPP="arm-linux-eabi-gcc -E" CPPFLAGS="-I${SYSROOT}/usr/include" ./configure --prefix="${SYSROOT}/usr" --host=arm-linux-eabi CFLAGS="--sysroot $SYSROOT"
+
+# Check out the source.
+git clone https://github.com/glennrp/libpng -b v1.6.37
+cd libpng
+# Only choose one of these, depending on your build machine...
+export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/darwin-x86_64
+export TOOLCHAIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64
+# Only choose one of these, depending on your device...
+export TARGET=aarch64-linux-android
+export TARGET=armv7a-linux-androideabi
+export TARGET=i686-linux-android
+export TARGET=x86_64-linux-android
+# Set this to your minSdkVersion.
+export API=21
+# Configure and build.
+export AR=$TOOLCHAIN/bin/llvm-ar
+export CC=$TOOLCHAIN/bin/$TARGET$API-clang
+export AS=$CC
+export CXX=$TOOLCHAIN/bin/$TARGET$API-clang++
+export LD=$TOOLCHAIN/bin/ld
+export RANLIB=$TOOLCHAIN/bin/llvm-ranlib
+export STRIP=$TOOLCHAIN/bin/llvm-strip
+./configure --host=$TARGET
+make
+
+make install prefix='/root/make/libiconv'
+make install prefix='/root/make/gettext'
+make install prefix='/root/make/pcre'
+make install prefix='/root/make/libffi'
+https://www.gnu.org/software/libiconv/?spm=a2c6h.12873639.article-detail.6.5409666fjVH0CF#TOCdownloading
+
+https://blog.csdn.net/weixin_34247155/article/details/90630707
+./configure make make install
+
+https://blog.csdn.net/weixin_34406796/article/details/90624817
+
+https://blog.csdn.net/weixin_33755847/article/details/91796241
+libtool: install: /bin/install -c .libs/libffi.so /usr/local/lib/libffi.so
+libtool: install: /bin/install -c .libs/libffi.lai /usr/local/lib/libffi.la
+libtool: install: /bin/install -c .libs/libffi.a /usr/local/lib/libffi.a
+
+/root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21
+/root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/aarch64-linux-android/asm
+/root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/local/include
+
+/root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/bin
+/root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/include
+/root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/share
+/root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/lib
+/root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/lib64
+
+[root@racknerd-634e11 21]# cp /usr/local/lib/libffi.so /root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21
+[root@racknerd-634e11 21]# cp /usr/local/lib/libffi.la /root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21
+[root@racknerd-634e11 21]# cp /usr/local/lib/libffi.a /root/android-ndk-r25/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/21
+
+glib_cv_long_long_format=11
+glib_cv_stack_grows=no
+glib_cv_uscore=no
+ac_cv_func_posix_getpwuid_r=no
+ac_cv_func_posix_getgrgid_r=no
+
+
+
